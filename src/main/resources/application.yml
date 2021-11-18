@@ -1,0 +1,7 @@
+logicalElement:
+    a: qwert
+    size: 20
+    maxValue: 100
+    minValue: 0
+    takes: 10
+    skips: 0
