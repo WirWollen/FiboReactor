@@ -1,7 +1,8 @@
 logicalElement:
-    a: qwert
+    wait: 500
     size: 20
     maxValue: 100
     minValue: 0
     takes: 10
     skips: 0
+    mult: 2

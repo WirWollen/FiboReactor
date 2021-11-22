@@ -15,13 +15,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-@Data
+
 @Component
-//@ConfigurationProperties(prefix = "logicalElement")
 public class Logic {
-    //private int size = 100, maxValue = 10, minValue = 0, skips = 0, takes = 1;
-    @Value("${logicalElement.a}")
-    private String a;
+    //Получаем данные из .yml
+    @Value("${logicalElement.wait}")
+    private int wait;
     @Value("${logicalElement.size}")
     private int size;
     @Value("${logicalElement.maxValue}")
@@ -32,7 +31,8 @@ public class Logic {
     private int skips;
     @Value("${logicalElement.takes}")
     private int takes;
-
+    @Value("${logicalElement.mult}")
+    private int mult;
 
 
     private ArrayList<Element> elementList = new ArrayList<Element>(size);
@@ -42,6 +42,7 @@ public class Logic {
 
     Flux<Element> elementGetter;
 
+    //Обработчик коллекции, который выбирает (min < Число < max)
     public void fluxGenerator() {
         Flux<Element> elementProducer = Flux.fromIterable(elementList).filter(element -> {
             if (element.getRandomNum() < maxValue && element.getRandomNum() > minValue) return true;
@@ -50,6 +51,8 @@ public class Logic {
         elementGetter = elementProducer;
     }
 
+
+    //Flux подписывается на поток fluxGenerator и выводит полученные элементы с промежутком в "wait"
     public void subscriberMaxFirst() {
         Flux
                 .create(sink -> {
@@ -61,18 +64,18 @@ public class Logic {
                         protected void hookOnComplete() {sink.complete();}
                     });
                 })
-                .delayElements(Duration.ofMillis(500))
+                .delayElements(Duration.ofMillis(wait))
                 .subscribe(System.out::println);
     }
 
-
+    //Flux подписывается на поток fluxGenerator, умножает на "mult", пропускает "skips" элементов и берёт "takes" элементов
     public void subscriberMaxSecond() {
         Flux
                 .create(sink -> {
                     elementGetter.subscribe(new BaseSubscriber<Element>() {
                         @Override
                         protected void hookOnNext(Element value) {
-                            sink.next(fluxElementList.add(2 * value.getRandomNum()));
+                            sink.next(fluxElementList.add(mult * value.getRandomNum()));
                         }
 
                         @Override
