@@ -1,8 +1,10 @@
 package com.example.FiboReact;
 
+import com.example.FiboReact.counts.CountRandomNum;
 import lombok.Data;
 
 @Data
 public class Element {
-    private int randomNum = (int)(Math.random() * 100);
+    //Получение значения randomNum
+    private int randomNum = (new CountRandomNum()).getRandomNum();
 }

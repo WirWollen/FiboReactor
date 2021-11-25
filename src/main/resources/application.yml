@@ -1,6 +1,6 @@
-logicalElement:
+logical-element:
     wait: 500
-    size: 20
+    size: 5
     maxValue: 100
     minValue: 0
     takes: 10
