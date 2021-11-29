@@ -6,12 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RandomElementTest {
     //Тест элемента с рандомным числом
-    @Test
-    public void testGetSet(){
-        RandomElement randomElement = new RandomElement();
-        randomElement.setValue(5);
-        assertEquals(5, randomElement.getValue(), "Number must be 5");
-    }
+//    @Test
+//    public void testGetSet(){
+//        RandomElement randomElement = new RandomElement();
+//        randomElement.setValue(5);
+//        assertEquals(5, randomElement.getValue(), "Number must be 5");
+//    }
 }
 
 
