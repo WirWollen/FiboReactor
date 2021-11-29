@@ -16,18 +16,18 @@ public class LogicTest {
     public void subscriberMaxFirstTest(){
         Logic logic = new Logic(new ValueOfYAML());
 
-        logic.setMinValue(0);
-        logic.setSize(4);
-        logic.setMaxValue(100);
-        logic.setWait(0);
+        logic.valueOfYAML.setMinValue(0);
+        logic.valueOfYAML.setSize(4);
+        logic.valueOfYAML.setMaxValue(100);
+        logic.valueOfYAML.setWait(0);
 
         logic.fillList();
 
         StepVerifier.create(logic.subscriberMaxFirst())
-                .expectNextMatches(element -> element >= logic.getMinValue() && element <= logic.getMaxValue())
-                .expectNextMatches(element -> element >= logic.getMinValue() && element <= logic.getMaxValue())
-                .expectNextMatches(element -> element >= logic.getMinValue() && element <= logic.getMaxValue())
-                .expectNextMatches(element -> element >= logic.getMinValue() && element <= logic.getMaxValue())
+                .expectNextMatches(element -> element >= logic.valueOfYAML.getMinValue() && element <= logic.valueOfYAML.getMaxValue())
+                .expectNextMatches(element -> element >= logic.valueOfYAML.getMinValue() && element <= logic.valueOfYAML.getMaxValue())
+                .expectNextMatches(element -> element >= logic.valueOfYAML.getMinValue() && element <= logic.valueOfYAML.getMaxValue())
+                .expectNextMatches(element -> element >= logic.valueOfYAML.getMinValue() && element <= logic.valueOfYAML.getMaxValue())
                 .expectComplete()
                 .verify();
     }
@@ -37,20 +37,20 @@ public class LogicTest {
     public void autoSubscriberMaxFirstTest(){
         Logic logic = new Logic(new ValueOfYAML());
 
-        logic.setMinValue(0);
-        logic.setTakes(10);
-        logic.setSize(25);
-        logic.setSkips(0);
-        logic.setMaxValue(100);
-        logic.setWait(500);
-        logic.setMult(2);
+        logic.valueOfYAML.setMinValue(0);
+        logic.valueOfYAML.setTakes(10);
+        logic.valueOfYAML.setSize(25);
+        logic.valueOfYAML.setSkips(0);
+        logic.valueOfYAML.setMaxValue(100);
+        logic.valueOfYAML.setWait(500);
+        logic.valueOfYAML.setMult(2);
 
         logic.fillList();
 
         logic.fluxGenerator().toStream().forEach(System.out::println);
 
         StepVerifier.create(logic.subscriberMaxFirst())
-                .thenConsumeWhile(element -> element >= logic.getMinValue() && element <= logic.getMaxValue())
+                .thenConsumeWhile(element -> element >= logic.valueOfYAML.getMinValue() && element <= logic.valueOfYAML.getMaxValue())
                 .expectComplete()
                 .verify();
     }
@@ -61,13 +61,13 @@ public class LogicTest {
     public void timeSubscriberMaxFirstTest(){
         Logic logic = new Logic(new ValueOfYAML());
 
-        logic.setMinValue(0);
-        logic.setTakes(10);
-        logic.setSize(5);
-        logic.setSkips(0);
-        logic.setMaxValue(100);
-        logic.setWait(2000);
-        logic.setMult(2);
+        logic.valueOfYAML.setMinValue(0);
+        logic.valueOfYAML.setTakes(10);
+        logic.valueOfYAML.setSize(5);
+        logic.valueOfYAML.setSkips(0);
+        logic.valueOfYAML.setMaxValue(100);
+        logic.valueOfYAML.setWait(2000);
+        logic.valueOfYAML.setMult(2);
 
         logic.fillList();
 
@@ -77,9 +77,9 @@ public class LogicTest {
                 .withVirtualTime(() -> logic.subscriberMaxFirst().take(2))
                 .expectSubscription()
                 .expectNoEvent(Duration.ofMillis(2000))
-                .expectNextMatches(element -> element >= logic.getMinValue() && element <= logic.getMaxValue())
+                .expectNextMatches(element -> element >= logic.valueOfYAML.getMinValue() && element <= logic.valueOfYAML.getMaxValue())
                 .thenAwait(Duration.ofMillis(2000))
-                .expectNextMatches(element -> element >= logic.getMinValue() && element <= logic.getMaxValue())
+                .expectNextMatches(element -> element >= logic.valueOfYAML.getMinValue() && element <= logic.valueOfYAML.getMaxValue())
                 .verifyComplete();
     }
 
@@ -88,20 +88,20 @@ public class LogicTest {
     public void subscriberMaxSecondTest(){
         Logic logic = new Logic(new ValueOfYAML());
 
-        logic.setMinValue(0);
-        logic.setSize(4);
-        logic.setMaxValue(100);
-        logic.setMult(2);
-        logic.setSkips(0);
-        logic.setTakes(4);
+        logic.valueOfYAML.setMinValue(0);
+        logic.valueOfYAML.setSize(4);
+        logic.valueOfYAML.setMaxValue(100);
+        logic.valueOfYAML.setMult(2);
+        logic.valueOfYAML.setSkips(0);
+        logic.valueOfYAML.setTakes(4);
 
         logic.fillList();
 
         StepVerifier.create(logic.subscriberMaxSecond())
-                .expectNextMatches(element -> element / logic.getMult() >= logic.getMinValue() && element / logic.getMult() <= logic.getMaxValue())
-                .expectNextMatches(element -> element / logic.getMult() >= logic.getMinValue() && element / logic.getMult() <= logic.getMaxValue())
-                .expectNextMatches(element -> element / logic.getMult() >= logic.getMinValue() && element / logic.getMult() <= logic.getMaxValue())
-                .expectNextMatches(element -> element / logic.getMult() >= logic.getMinValue() && element / logic.getMult() <= logic.getMaxValue())
+                .expectNextMatches(element -> element / logic.valueOfYAML.getMult() >= logic.valueOfYAML.getMinValue() && element / logic.valueOfYAML.getMult() <= logic.valueOfYAML.getMaxValue())
+                .expectNextMatches(element -> element / logic.valueOfYAML.getMult() >= logic.valueOfYAML.getMinValue() && element / logic.valueOfYAML.getMult() <= logic.valueOfYAML.getMaxValue())
+                .expectNextMatches(element -> element / logic.valueOfYAML.getMult() >= logic.valueOfYAML.getMinValue() && element / logic.valueOfYAML.getMult() <= logic.valueOfYAML.getMaxValue())
+                .expectNextMatches(element -> element / logic.valueOfYAML.getMult() >= logic.valueOfYAML.getMinValue() && element / logic.valueOfYAML.getMult() <= logic.valueOfYAML.getMaxValue())
                 .expectComplete()
                 .verify();
     }
@@ -110,19 +110,19 @@ public class LogicTest {
     public void autoSubscriberMaxSecondTest(){
         Logic logic = new Logic(new ValueOfYAML());
 
-        logic.setMinValue(0);
-        logic.setSize(10);
-        logic.setMaxValue(100);
-        logic.setMult(2);
-        logic.setSkips(0);
-        logic.setTakes(10);
+        logic.valueOfYAML.setMinValue(0);
+        logic.valueOfYAML.setSize(10);
+        logic.valueOfYAML.setMaxValue(100);
+        logic.valueOfYAML.setMult(2);
+        logic.valueOfYAML.setSkips(0);
+        logic.valueOfYAML.setTakes(10);
 
         logic.fillList();
 
         logic.fluxGenerator().toStream().forEach(System.out::println);
 
         StepVerifier.create(logic.subscriberMaxSecond())
-                .thenConsumeWhile(element -> element / logic.getMult() >= logic.getMinValue() && element / logic.getMult() <= logic.getMaxValue())
+                .thenConsumeWhile(element -> element / logic.valueOfYAML.getMult() >= logic.valueOfYAML.getMinValue() && element / logic.valueOfYAML.getMult() <= logic.valueOfYAML.getMaxValue())
                 .expectComplete()
                 .verify();
     }

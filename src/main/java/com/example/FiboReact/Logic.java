@@ -1,8 +1,16 @@
 package com.example.FiboReact;
 
+import com.example.FiboReact.elements.Element;
+import com.example.FiboReact.elements.ElementGetter;
+import com.example.FiboReact.elements.ElementType;
+import com.example.FiboReact.elements.ElementFactory;
 import com.example.FiboReact.entities.ValueOfYAML;
 import lombok.Data;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
 import java.time.Duration;
@@ -12,55 +20,57 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Data
-@Component
 public class Logic {
     //Получаем данные из .yml
-    private int wait;
-    private int size;
-    private int minValue, maxValue;
-    private int skips;
-    private int takes;
-    private int mult;
+    ValueOfYAML valueOfYAML = new ValueOfYAML();
 
-    private List<Element> elementListWithRandomData = new ArrayList<>(size);
 
     public Logic(ValueOfYAML valueOfYAML){
-        size = valueOfYAML.getSize();
-        maxValue = valueOfYAML.getMaxValue();
-        minValue = valueOfYAML.getMinValue();
-        skips = valueOfYAML.getSkips();
-        takes = valueOfYAML.getTakes();
-        wait = valueOfYAML.getWait();
-        mult = valueOfYAML.getMult();
+        this.valueOfYAML = valueOfYAML;
     }
 
-    public void fillList() {elementListWithRandomData = IntStream.range(0, size).mapToObj(i -> new Element()).collect(Collectors.toList());}
+    private ElementGetter elementGetter = new ElementGetter(new ElementFactory());
+    private List<Element> elementList = new ArrayList<>(valueOfYAML.getSize());
+
+    public void fillList() {
+        elementList = IntStream.range(0, valueOfYAML
+                .getSize())
+                .mapToObj(i -> elementGetter.orderElement(ElementType.RandomElement))
+                .collect(Collectors.toList());
+    }
 
     //Обработчик коллекции, который выбирает (min <= Число <= max)
     public Flux<Element> fluxGenerator() {
-        return  Flux.fromIterable(elementListWithRandomData)
-                .filter(element -> element
-                        .getRandomNum() >= minValue && element.getRandomNum() <= maxValue);
+        return  Flux.fromIterable(elementList)
+                .filter(valueOf -> valueOf
+                        .getValue() >= valueOfYAML.getMinValue() && valueOf.getValue() <= valueOfYAML.getMaxValue()
+                );
     }
 
     //Flux подписывается на поток fluxGenerator и выводит полученные элементы с промежутком в "wait"
     public Flux<Integer> subscriberMaxFirst() {
         return fluxGenerator()
-                .map(element->element.getRandomNum())
-                .delayElements(Duration.ofMillis(wait));
+                .map(valueOf-> valueOf.getValue())
+                .delayElements(Duration.ofMillis(valueOfYAML.getWait()));
     }
 
     //Flux подписывается на поток fluxGenerator, умножает на "mult", пропускает "skips" элементов и берёт "takes" элементов
     public Flux<Integer> subscriberMaxSecond() {
                 return fluxGenerator()
-                        .map(element->mult * element.getRandomNum())
-                        .skip(skips)
-                        .take(takes);
+                        .map(valueOf ->valueOfYAML.getMult() * valueOf.getValue())
+                        .skip(valueOfYAML.getSkips())
+                        .take(valueOfYAML.getTakes());
     }
 
-    public void showSubscriberMaxFirst(){subscriberMaxFirst().toStream().forEach(System.out::println);}
+    public void showSubscriberMaxFirst(){
+        subscriberMaxFirst()
+                .doOnTerminate(() -> System.out.println("First completed"))
+                .subscribe(System.out::println);
+    }
 
-    public void showSubscriberMaxSecond() {subscriberMaxSecond().toStream().forEach(System.out::println);}
-
-    //Не совсем понял смысла .subscribe, ибо получилось всё переписать без него
+    public void showSubscriberMaxSecond() {
+        subscriberMaxSecond()
+                .doOnTerminate(() -> System.out.println("Second completed"))
+                .subscribe(System.out::println);
+    }
 }

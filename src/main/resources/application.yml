@@ -6,3 +6,6 @@ logical-element:
     takes: 10
     skips: 0
     mult: 2
+
+values-for-elements:
+    randomMax: 100

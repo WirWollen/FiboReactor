@@ -1,14 +1,16 @@
 package com.example.FiboReact.counts;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
-@Data
 @Component
-public class CountRandomNum {
-    //Стоит ли вытягивать значения "100" из .yml? Или стоит оставить всё как есть?
-    //Не уверен, что поправил "Рассчет значений лучше вынести в отдельную сущность. Как вариант заюзать private/package-private конструктор и фабрику."
-    public int getRandomNum(){
-        return (int)(Math.random() * 100);
+public class CountRandomNum implements GetNum{
+    //@Value("${values-for-elements.randomMax}")
+    private int randomMax = 100;
+
+    public int getNum(){
+        return (int)(Math.random() * randomMax);
     }
 }
