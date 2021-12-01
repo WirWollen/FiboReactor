@@ -1,28 +1,32 @@
 package com.example.FiboReact.controllers;
 
-import com.example.FiboReact.Logic;
-import com.example.FiboReact.entities.ValueOfYAML;
+import com.example.FiboReact.elements.values.GetValue;
+import com.example.FiboReact.services.LogicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
-
-import java.util.ArrayList;
+import reactor.core.publisher.Mono;
 
 @RestController
 @Api(description = "Swagger illustration")
-@RequestMapping("/generator")
+//@RequestMapping("/generator")
 public class GeneratorController {
     @Autowired
-    Logic logic;
+    LogicService logicService;
 
-    @GetMapping
-    @ApiOperation("show generator")
-    public Flux fluxGenerator(){
-        return logic.fluxGenerator();
+//    @GetMapping("/flux")
+//    @ApiOperation("show fluxGenerator")
+//    public Flux fluxGenerator(){
+//        return logicService.fluxGenerator();
+//    }
+
+    @GetMapping("/flux")
+    @ApiOperation("show fluxGenerator")
+    public  Flux<GetValue>  fluxGenerator(){
+        return logicService.subscriberMaxSecond();
     }
+
 
 }

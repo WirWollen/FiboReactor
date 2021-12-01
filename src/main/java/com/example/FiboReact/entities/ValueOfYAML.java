@@ -7,13 +7,15 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
+
 @ConfigurationProperties(prefix = "logical-element")
 @Data
 @Component
 public class ValueOfYAML {
     //Получаем данные из .yml
 //    @Value("${logical-element.wait}")
-//    private int wait;
+//    private Duration wait;
 //    @Value("${logical-element.size}")
 //    private int size;
 //    @Value("${logical-element.maxValue}")
@@ -27,11 +29,9 @@ public class ValueOfYAML {
 //    @Value("${logical-element.mult}")
 //    private int mult;
 
-    private int wait;
+    private Duration wait;
     private int size;
-    private int maxValue;
-    private int minValue;
-    private int skips;
-    private int takes;
+    private int maxValue, minValue;
+    private int skips, takes;
     private int mult;
 }

@@ -1,6 +1,6 @@
 package com.example.FiboReact;
 
-import com.example.FiboReact.counts.CountRandomNum;
+import com.example.FiboReact.services.LogicService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
@@ -13,14 +13,11 @@ public class FiboReactApplication {
 	public static void main(String[] args) throws InterruptedException {
 		ApplicationContext ctx = SpringApplication.run(FiboReactApplication.class,args);
 
+		LogicService logicService = (LogicService) ctx.getBean("Logic");
 
+		logicService.fillList();
 
-		Logic logic = (Logic) ctx.getBean("Logic");
-
-		logic.fillList();
-
-		logic.showSubscriberMaxFirst();
-		logic.showSubscriberMaxSecond();
+		logicService.showSubscriberMaxFirst();
+		logicService.showSubscriberMaxSecond();
 	}
-
 }
