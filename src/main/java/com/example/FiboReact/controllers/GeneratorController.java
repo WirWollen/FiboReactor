@@ -1,6 +1,6 @@
 package com.example.FiboReact.controllers;
 
-import com.example.FiboReact.elements.values.HasElement;
+import com.example.FiboReact.elements.values.HasValue;
 import com.example.FiboReact.services.LogicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,7 +17,7 @@ public class GeneratorController {
 
     @GetMapping("/flux")
     @ApiOperation("show fluxGenerator")
-    public  Flux<HasElement>  configuratorSecond(){
+    public  Flux<HasValue>  configuratorSecond(){
         return logicService.configuratorSecond();
     }
 

@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
-public class Element implements HasElement {
+public class Element implements HasValue {
     private final int value;
 
     public int getValue(){

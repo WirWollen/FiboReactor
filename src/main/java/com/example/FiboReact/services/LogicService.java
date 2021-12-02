@@ -1,7 +1,7 @@
 package com.example.FiboReact.services;
 
-import com.example.FiboReact.elements.factory.ElementFactoryCreator;
-import com.example.FiboReact.elements.values.HasElement;
+import com.example.FiboReact.elements.factory.ElementFactory_CreateElement;
+import com.example.FiboReact.elements.values.HasValue;
 import com.example.FiboReact.components.ValueOfYAML;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -17,19 +17,19 @@ import java.util.stream.IntStream;
 public class LogicService {
     //Получаем данные из .yml
     private final ValueOfYAML valueOfYAML;
-    private final ElementFactoryCreator elementFactoryCreator;
+    private final ElementFactory_CreateElement elementFactoryCreateElement;
 
-    private List<HasElement> elementList = new ArrayList<>();
+    private List<HasValue> elementList = new ArrayList<>();
 
     public void fillList() {
         elementList = IntStream.range(0, valueOfYAML
                 .getSize())
-                .mapToObj(i -> elementFactoryCreator.createElement())
+                .mapToObj(i -> elementFactoryCreateElement.createElement())
                 .collect(Collectors.toList());
     }
 
     //Обработчик коллекции, который выбирает (min <= Число <= max)
-    public Flux<HasElement> fluxGenerator() {
+    public Flux<HasValue> fluxGenerator() {
         return  Flux.fromIterable(elementList)
                 .filter(valueOf -> valueOf
                         .getValue() >= valueOfYAML.getMinValue() && valueOf.getValue() <= valueOfYAML.getMaxValue());
