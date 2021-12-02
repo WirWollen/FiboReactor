@@ -1,16 +1,15 @@
 package com.example.FiboReact.controllers;
 
-import com.example.FiboReact.elements.values.GetValue;
+import com.example.FiboReact.elements.values.HasElement;
 import com.example.FiboReact.services.LogicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 @RestController
-@Api(description = "Swagger illustration")
+@Api("Swagger illustration")
 //@RequestMapping("/generator")
 public class GeneratorController {
     @Autowired
@@ -18,8 +17,8 @@ public class GeneratorController {
 
     @GetMapping("/flux")
     @ApiOperation("show fluxGenerator")
-    public  Flux<GetValue>  fluxGenerator(){
-        return logicService.subscriberMaxSecond();
+    public  Flux<HasElement>  configuratorSecond(){
+        return logicService.configuratorSecond();
     }
 
 

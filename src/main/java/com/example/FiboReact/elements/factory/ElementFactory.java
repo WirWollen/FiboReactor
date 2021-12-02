@@ -1,13 +1,11 @@
 package com.example.FiboReact.elements.factory;
 
-import com.example.FiboReact.elements.values.GetValue;
+import com.example.FiboReact.elements.values.HasElement;
 import com.example.FiboReact.elements.values.Element;
-import org.springframework.stereotype.Service;
 
-@Service
-public class ElementFactory implements ElementCreator {
+public class ElementFactory implements ElementFactoryCreator {
     @Override
-    public GetValue createElement(){
+    public HasElement createElement(){
         return new Element((int)(Math.random() * 100));
     }
 }

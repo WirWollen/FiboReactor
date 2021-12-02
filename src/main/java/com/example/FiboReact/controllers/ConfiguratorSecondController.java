@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
 @RestController
-@Api(description = "Swagger illustration")
-public class SubsMaxSecond {
+@Api("Swagger illustration")
+public class ConfiguratorSecondController {
     @Autowired
     LogicService logicService;
 
     @GetMapping("/second")
-    @ApiOperation("show subscriberMaxSecond")
+    @ApiOperation("show configuratorSecondResult")
     public Flux<Integer> subsSecond(){
-        return logicService.subscriberMaxSecond();
+        return logicService.configuratorSecond();
     }
 }

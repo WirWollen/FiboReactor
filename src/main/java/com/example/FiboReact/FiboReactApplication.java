@@ -15,7 +15,7 @@ public class FiboReactApplication {
 
 		logicService.fillList();
 
-		logicService.showSubscriberMaxFirst();
-		logicService.showSubscriberMaxSecond();
+		logicService.showConfigurationFirstResult();
+		logicService.showConfigurationSecondResult();
 	}
 }
