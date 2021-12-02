@@ -16,12 +16,6 @@ public class GeneratorController {
     @Autowired
     LogicService logicService;
 
-//    @GetMapping("/flux")
-//    @ApiOperation("show fluxGenerator")
-//    public Flux fluxGenerator(){
-//        return logicService.fluxGenerator();
-//    }
-
     @GetMapping("/flux")
     @ApiOperation("show fluxGenerator")
     public  Flux<GetValue>  fluxGenerator(){

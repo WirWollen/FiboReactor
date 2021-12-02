@@ -1,32 +1,31 @@
 package com.example.FiboReact.services;
 
-import com.example.FiboReact.elements.factory.RandomElementFactory;
+import com.example.FiboReact.elements.factory.ElementFactory;
 import com.example.FiboReact.elements.values.GetValue;
-import com.example.FiboReact.entities.ValueOfYAML;
+import com.example.FiboReact.components.ValueOfYAML;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import reactor.core.Disposable;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-
+@Service
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 public class LogicService {
     //Получаем данные из .yml
     private final ValueOfYAML valueOfYAML;
+    private final ElementFactory elementFactory ;
 
-    private RandomElementFactory randomElementFactory = new RandomElementFactory();
     private List<GetValue> elementList = new ArrayList<>();
 
     public void fillList() {
         elementList = IntStream.range(0, valueOfYAML
                 .getSize())
-                .mapToObj(i -> randomElementFactory.createElement())
+                .mapToObj(i -> elementFactory.createElement())
                 .collect(Collectors.toList());
     }
 
