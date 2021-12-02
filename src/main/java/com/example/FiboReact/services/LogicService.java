@@ -1,6 +1,6 @@
 package com.example.FiboReact.services;
 
-import com.example.FiboReact.elements.factory.ElementFactory_CreateElement;
+import com.example.FiboReact.elements.factory.ElementFactory;
 import com.example.FiboReact.elements.values.HasValue;
 import com.example.FiboReact.components.ValueOfYAML;
 import lombok.AccessLevel;
@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
 public class LogicService {
     //Получаем данные из .yml
     private final ValueOfYAML valueOfYAML;
-    private final ElementFactory_CreateElement elementFactoryCreateElement;
+    private final ElementFactory elementFactoryCreateElement;
 
     private List<HasValue> elementList = new ArrayList<>();
 
